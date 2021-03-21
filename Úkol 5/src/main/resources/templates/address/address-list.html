@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Address list</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+
+<section>
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Postal code</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${addresses.empty}">
+            <td colspan="2">Addresses is empty</td>
+        </tr>
+        <tr th:each="address, iter: ${addresses}">
+            <td><span th:text="${iter.index + 1}"></span></td>
+            <td><span th:text="${address.city}"></span></td>
+            <td><span th:text="${address.state}"></span></td>
+            <td><span th:text="${address.postalCode}"></span></td>
+            <td><a th:href="'/address-detail/' + ${address.id}">Detail</a></td>
+            <td><a th:href="'/address-form/' + ${address.id}">Edit</a></td>
+            <td><a th:href="'/address-remove/' + ${address.id}">Remove</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+
+</html>

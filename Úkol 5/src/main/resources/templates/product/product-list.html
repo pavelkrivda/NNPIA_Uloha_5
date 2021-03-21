@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Product list</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+
+<section class="product-list">
+
+    <div class="product" th:each="product : ${productList}">
+        <a th:href="@{/product-detail/{id} (id=${product.getId()})}"><h3 th:text="${product.name}"></h3></a>
+        <div class="product-list-image">
+            <img th:if="${product.getPathToImage() != null}"
+                 th:src="@{/images/{path} (path=${product.getPathToImage()})}"/>
+        </div>
+        <div class="product-list-control-button">
+            <a th:href="@{'/shopping-cart-add/' + ${product.getId()}}"><img th:src="@{/imgs/add.png}"/></a>
+            <a th:href="@{'/shopping-cart-remove/' + ${product.getId()}}"><img th:src="@{/imgs/remove.png}"/></a>
+        </div>
+    </div>
+
+</section>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Person detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <h5>First name:</h5>
+    <p th:text="${person.firstName}"></p>
+    <h5>Last name:</h5>
+    <p th:text="${person.lastName}"></p>
+    <h5>Age:</h5>
+    <p th:text="${person.age}"></p>
+
+    <h5>City:</h5>
+    <p th:text="${person.address.city}"></p>
+    <h5>State:</h5>
+    <p th:text="${person.address.state}"></p>
+    <h5>Postal code:</h5>
+    <p th:text="${person.address.postalCode}"></p>
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">State</th>
+            <th scope="col">Product count</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${person.orders.empty}">
+            <td colspan="2">Orders is empty</td>
+        </tr>
+        <tr th:each="order, iter : ${person.orders}">
+            <td><span th:text="${iter.index + 1}"></span></td>
+            <td><span th:text="${order.state}"></span></td>
+            <td><span th:text="${order.orderHasProducts.size()}"></span></td>
+            <td><a th:href="'/order-detail/' + ${order.id}">Detail</a></td>
+            <td><a th:href="'/order-form/' + ${order.id}">Edit</a></td>
+            <td><a th:href="'/order-remove/' + ${order.id}">Remove</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</section>
+
+</body>
+
+</html>

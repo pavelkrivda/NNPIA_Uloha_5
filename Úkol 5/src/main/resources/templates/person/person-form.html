@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+<h2>Add person</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <form action="#" th:action="@{/person-form-process}" th:object="${person}" method="post">
+        <div class="form-group">
+            <input type="hidden" th:field="*{id}">
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">First name: </label>
+            <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last name: </label>
+            <input type="text" th:field="*{lastName}" class="form-control" id="lastName" placeholder="Last Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age: </label>
+            <input type="text" th:field="*{age}" class="form-control" id="age" placeholder="Age" required>
+        </div><br>
+
+        <div class="form-group">
+            <label for="city">City: </label>
+            <input type="text" th:field="*{address.city}" class="form-control" id="city" placeholder="City" required>
+        </div>
+        <div class="form-group">
+            <label for="state">State: </label>
+            <input type="text" th:field="*{address.state}" class="form-control" id="state" placeholder="State" required>
+        </div>
+
+        <div class="form-group">
+            <label for="postalCode">Postal code: </label>
+            <input type="text" th:field="*{address.postalCode}" class="form-control" id="postalCode" placeholder="Postal code" required>
+        </div><br>
+
+
+        <button type="submit" class="btn btn-primary">Insert person</button>
+    </form>
+</section>
+</body>
+</html>

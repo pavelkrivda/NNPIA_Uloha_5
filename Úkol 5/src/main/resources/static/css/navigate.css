@@ -1,0 +1,21 @@
+nav {
+    background-color: aliceblue;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a{
+    transition: width 2s;
+    text-decoration: none;
+    width: 140px;
+}
+
+nav a:hover {
+    background: greenyellow;
+    text-align: center;
+    width: 250px;
+}

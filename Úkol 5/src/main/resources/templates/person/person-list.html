@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Person list</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+
+<section>
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${persons.empty}">
+            <td colspan="2">Persons is empty</td>
+        </tr>
+        <tr th:each="person, iter : ${persons}">
+            <td><span th:text="${iter.index + 1}"></span></td>
+            <td><span th:text="${person.firstName}"></span></td>
+            <td><span th:text="${person.lastName}"></span></td>
+            <td><a th:href="'/person-detail/' + ${person.id}">Detail</a></td>
+            <td><a th:href="'/person-form/' + ${person.id}">Edit</a></td>
+            <td><a th:href="'/person-remove/' + ${person.id}">Remove</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+.vsc-initialized {
+    width: 1240px;
+    margin: 40px auto;
+}
+
+h2 {
+    font-family: sans-serif;
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+p {
+    font-family: sans-serif;
+}
+
+
+.product {
+    width: 300px;
+    height: 340px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid gray;
+}
+
+.product h3 {
+    height: 50px;
+}
+
+.product a {
+    text-decoration: none;
+    color: black;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-list-controls {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-list-controls a {
+    width: 140px;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    padding: 10px;
+}

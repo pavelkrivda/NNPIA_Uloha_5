@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Address detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <h5>City:</h5>
+    <p th:text="${address.city}"></p>
+    <h5>State:</h5>
+    <p th:text="${address.state}"></p>
+    <h5>Postal code:</h5>
+    <p th:text="${address.postalCode}"></p>
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${address.person.empty}">
+            <td colspan="2">Persons is empty</td>
+        </tr>
+        <tr th:each="person, itr: ${address.person}">
+            <td><span th:text="${itr.index + 1}"> </span></td>
+            <td><span th:text="${person.firstName}"> </span></td>
+            <td><span th:text="${person.lastName}"> </span></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</section>
+
+</body>
+
+</html>

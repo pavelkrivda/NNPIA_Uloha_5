@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Order detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <h5>State:</h5>
+    <p th:text="${order.state}"></p>
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Product</th>
+            <th scope="col">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${order.orderHasProducts.empty}">
+            <td colspan="2">Order is empty</td>
+        </tr>
+        <tr th:each="orderItem, itr: ${order.orderHasProducts}">
+            <td><span th:text="${itr.index + 1}"></span></td>
+            <td><span th:text="${orderItem.product.name}"></span></td>
+            <td><span th:text="${orderItem.amount}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</section>
+
+</body>
+
+</html>

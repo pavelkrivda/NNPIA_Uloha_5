@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Product detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <h3 th:text="${product.name}"></h3>
+    <h5>Description:</h5>
+    <p th:text="${product.description}"></p>
+    <img class="product-detail-image" th:if="${product.getPathToImage() != null}" th:src="@{/images/{path} (path=${product.getPathToImage()})}" />
+
+</section>
+
+</body>
+
+</html>

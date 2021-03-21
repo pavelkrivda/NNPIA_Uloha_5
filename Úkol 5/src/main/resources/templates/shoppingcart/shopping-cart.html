@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Shopping cart</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+
+<section>
+
+    <table class="table table-striped shopping-cart-table" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Product</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${shoppingCart.empty}">
+            <td colspan="2">Shopping cart is empty</td>
+        </tr>
+        <tr th:each="cartItem, iter : ${shoppingCart.entrySet()}">
+            <td><span th:text="${iter.index + 1}"></span></td>
+            <td><span th:text="${cartItem.getKey().name}"></span></td>
+            <td><span th:text="${cartItem.getValue()}"></span></td>
+            <td><a th:href="@{'/shopping-cart-add/' + ${cartItem.getKey().getId()}}"><img
+                    th:src="@{/imgs/add.png}"/></a>
+            </td>
+            <td><a th:href="@{'/shopping-cart-remove/' + ${cartItem.getKey().getId()}}"><img
+                    th:src="@{/imgs/remove.png}"/></a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</section>
+
+<section class="product-list-controls">
+    <a class="shopping-cart-checkout" th:href="@{'checkout'}">Checkout</a>
+    <a class="shopping-cart-storno" th:href="@{'storno'}">Storno</a>
+</section>
+
+</body>
+
+</html>
