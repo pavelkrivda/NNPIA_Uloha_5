@@ -1,5 +1,3 @@
-package com.example.demo;
-
 import com.example.demo.datafactory.ProductTestDataFactory;
 import com.example.demo.datafactory.SupplierTestDataFactory;
 import com.example.demo.entity.Product;
@@ -15,13 +13,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({ProductTestDataFactory.class, SupplierTestDataFactory.class, ShoppingCartServiceImpl.class})
-public class ShoppingCartTest {
+@Import([ProductTestDataFactory.class, SupplierTestDataFactory.class, ShoppingCartServiceImpl.class])
+public class ShoppingCartGroovyTest {
 
     @Autowired
     private ProductRepository productRepository;
@@ -33,7 +29,7 @@ public class ShoppingCartTest {
     private ProductTestDataFactory productTestDataFactory;
 
     @Test
-    public void addOneToShoppingCart() {
+    private void addOneToShoppingCart() {
         productTestDataFactory.saveProduct();
 
         List<Product> all = productRepository.findAll();

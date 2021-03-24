@@ -17,6 +17,9 @@ public class Product {
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<OrderHasProduct> productInOrders;
 
+    @ManyToOne(optional = false)
+    private Supplier supplier;
+
     @Column(columnDefinition = "text")
     private String description;
 
@@ -61,6 +64,14 @@ public class Product {
 
     public void setPathToImage(String pathToImage) {
         this.pathToImage = pathToImage;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     @Override

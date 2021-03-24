@@ -10,10 +10,10 @@ public class OrderHasProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Order order;
 
     private Integer amount;

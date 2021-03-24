@@ -1,31 +1,25 @@
-package com.example.demo;
+import com.example.demo.datafactory.AddressTestDataFactory
+import com.example.demo.datafactory.OrderTestDataFactory
+import com.example.demo.datafactory.PersonTestDataFactory
+import com.example.demo.entity.Order
+import com.example.demo.repository.OrderRepository
+import org.assertj.core.api.Assertions
+import org.junit.Assert
+import org.junit.jupiter.api.Test
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.context.annotation.Import
+import org.springframework.test.context.junit4.SpringRunner
 
-import com.example.demo.datafactory.AddressTestDataFactory;
-import com.example.demo.datafactory.OrderTestDataFactory;
-import com.example.demo.datafactory.PersonTestDataFactory;
-import com.example.demo.entity.Order;
-import com.example.demo.entity.State;
-import com.example.demo.repository.*;
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.hasSize
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({OrderTestDataFactory.class, PersonTestDataFactory.class, AddressTestDataFactory.class})
+@Import([OrderTestDataFactory.class, PersonTestDataFactory.class, AddressTestDataFactory.class])
 public class OrderRepositoryTest {
 
     @Autowired
@@ -35,8 +29,9 @@ public class OrderRepositoryTest {
     private OrderTestDataFactory orderTestDataFactory;
 
     @Test
-    public void saveOrderTest() {
-        orderTestDataFactory.saveOrder();
+    private void saveOrderTest() {
+        Order order = new Order(state: OrderTestDataFactory.TEST_STATE);
+        orderTestDataFactory.saveOrder(order);
 
         List<Order> all = orderRepository.findAll();
         assertThat(all, hasSize(1));
@@ -55,23 +50,25 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void deleteOrderTest() {
-        orderTestDataFactory.saveOrder();
+    private void deleteOrderTest() {
+        Order order = new Order(state:  OrderTestDataFactory.TEST_STATE);
+        orderTestDataFactory.saveOrder(order);
 
         List<Order> all = orderRepository.findAll();
         assertThat(all, hasSize(1));
 
-        orderRepository.delete(all.get(0));
+        orderRepository.delete(order.getId());
 
         all = orderRepository.findAll();
         assertThat(all, hasSize(0));
     }
 
     @Test
-    public void findByIdTest() {
-        orderTestDataFactory.saveOrder();
+    private void findByIdTest() {
+        Order order = new Order(state:  OrderTestDataFactory.TEST_STATE);
+        orderTestDataFactory.saveOrder(order);
 
-        Optional<Order> findOrder = orderRepository.findById(0L);
+        Optional<Order> findOrder = orderRepository.findById(order.getId());
         Assert.assertNotNull(findOrder);
     }
 }

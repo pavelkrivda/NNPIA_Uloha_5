@@ -1,8 +1,6 @@
-package com.example.demo;
-
 import com.example.demo.datafactory.AddressTestDataFactory;
 import com.example.demo.entity.Address;
-import com.example.demo.repository.*;
+import com.example.demo.repository.AddressRepository
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -30,8 +26,9 @@ public class AdressRepositoryTest {
     private AddressTestDataFactory addressTestDataFactory;
 
     @Test
-    public void saveAddressTest() {
-        addressTestDataFactory.saveAddress();
+    private void saveAddressTest() {
+        Address address = new Address(city: AddressTestDataFactory.TEST_CITY, state: AddressTestDataFactory.TEST_STATE, postalCode: AddressTestDataFactory.TEST_POSLAT_CODE);
+        addressTestDataFactory.saveAddress(address);
 
         List<Address> all = addressRepository.findAll();
         assertThat(all, hasSize(1));
@@ -43,8 +40,9 @@ public class AdressRepositoryTest {
     }
 
     @Test
-    public void deleteAddressTest() {
-        addressTestDataFactory.saveAddress();
+    private void deleteAddressTest() {
+        Address address = new Address(city: AddressTestDataFactory.TEST_CITY, state: AddressTestDataFactory.TEST_STATE, postalCode: AddressTestDataFactory.TEST_POSLAT_CODE);
+        addressTestDataFactory.saveAddress(address);
 
         List<Address> all = addressRepository.findAll();
         assertThat(all, hasSize(1));

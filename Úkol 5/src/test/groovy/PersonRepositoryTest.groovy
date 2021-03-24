@@ -1,27 +1,23 @@
-package com.example.demo;
+import com.example.demo.datafactory.AddressTestDataFactory
+import com.example.demo.datafactory.PersonTestDataFactory
+import com.example.demo.entity.Person
+import com.example.demo.repository.PersonRepository
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.context.annotation.Import
+import org.springframework.test.context.junit4.SpringRunner
 
-import com.example.demo.datafactory.AddressTestDataFactory;
-import com.example.demo.datafactory.PersonTestDataFactory;
-import com.example.demo.entity.Person;
-import com.example.demo.repository.PersonRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.hasSize
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({PersonTestDataFactory.class, AddressTestDataFactory.class})
+@Import([PersonTestDataFactory.class, AddressTestDataFactory.class])
 public class PersonRepositoryTest {
 
     @Autowired
@@ -31,7 +27,7 @@ public class PersonRepositoryTest {
     private PersonTestDataFactory personTestDataFactory;
 
     @Test
-    public void savePersonTest() {
+    private void savePersonTest() {
         personTestDataFactory.savePerson();
 
         List<Person> all = personRepository.findAll();
@@ -48,7 +44,8 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void deletePersonTest() {
+    private void deletePersonTest() {
+        Person person = new Person(firstName: TEST_FIRST_NAME, lastName: TEST_LAST_NAME, age: TEST_AGE);
         personTestDataFactory.savePerson();
 
         List<Person> all = personRepository.findAll();

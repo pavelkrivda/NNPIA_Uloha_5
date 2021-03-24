@@ -1,8 +1,6 @@
-package com.example.demo;
-
 import com.example.demo.datafactory.*;
 import com.example.demo.entity.OrderHasProduct;
-import com.example.demo.repository.*;
+import com.example.demo.repository.OrderHasProductRepository
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +18,7 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({OrderHasProductTestDataFactory.class, OrderTestDataFactory.class, PersonTestDataFactory.class, AddressTestDataFactory.class,  ProductTestDataFactory.class, SupplierTestDataFactory.class})
+@Import([OrderHasProductTestDataFactory.class, OrderTestDataFactory.class, PersonTestDataFactory.class, AddressTestDataFactory.class,  ProductTestDataFactory.class, SupplierTestDataFactory.class])
 public class OrderHasProductTest {
 
     @Autowired
@@ -30,7 +28,7 @@ public class OrderHasProductTest {
     private OrderHasProductTestDataFactory orderHasProductTestDataFactory;
 
     @Test
-    public void saveOrderHasProductTest() {
+    private void saveOrderHasProductTest() {
         orderHasProductTestDataFactory.saveOrderHasProduct();
 
         List<OrderHasProduct> all = orderHasProductRepository.findAll();
@@ -55,7 +53,7 @@ public class OrderHasProductTest {
     }
 
     @Test
-    public void deleteOrderHasProductTest() {
+    private void deleteOrderHasProductTest() {
         orderHasProductTestDataFactory.saveOrderHasProduct();
 
         List<OrderHasProduct> all = orderHasProductRepository.findAll();
