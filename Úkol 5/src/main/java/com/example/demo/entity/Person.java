@@ -24,7 +24,7 @@ public class Person {
     private String lastName;
 
     @Column(length = 3)
-    private Byte age;
+    private Integer age;
 
     public Long getId() {
         return id;
@@ -66,11 +66,11 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Byte getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

@@ -27,7 +27,7 @@ public class PersonRepositoryTest {
         Person person = new Person();
         person.setFirstName("Pepa");
         person.setLastName("Novak");
-        person.setAge((byte)5);
+        person.setAge(5);
 
         personRepository.save(person);
 
@@ -40,7 +40,7 @@ public class PersonRepositoryTest {
         Person person = new Person();
         person.setFirstName("Pepa");
         person.setLastName("Novak");
-        person.setAge((byte)5);
+        person.setAge(5);
         personRepository.save(person);
 
         List<Person> all = personRepository.findAll();

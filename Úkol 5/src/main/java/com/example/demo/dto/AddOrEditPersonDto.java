@@ -17,7 +17,7 @@ public class AddOrEditPersonDto {
 
     private String lastName;
 
-    private Byte age;
+    private Integer age;
 
     public Long getId() {
         return id;
@@ -51,11 +51,11 @@ public class AddOrEditPersonDto {
         this.lastName = lastName;
     }
 
-    public Byte getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 }
