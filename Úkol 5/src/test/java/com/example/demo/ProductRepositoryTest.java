@@ -23,23 +23,31 @@ import static org.hamcrest.Matchers.hasSize;
 //@SpringBootTest
 class ProductRepositoryTest {
 
+    private static final String TEST_PRODUCT_NAME = "Auto";
+    private static final String TEST_DESCRIPTION = "Popis";
+
     @Autowired
     private ProductRepository productRepository;
 
     @Test
     public void saveProductTest() {
         Product product = new Product();
-        product.setName("Auto");
+        product.setName(TEST_PRODUCT_NAME);
+        product.setDescription(TEST_DESCRIPTION);
         productRepository.save(product);
 
         List<Product> all = productRepository.findAll();
         assertThat(all, hasSize(1));
+
+        Product productFromDatabase = productRepository.findById(product.getId()).get();
+        Assertions.assertThat(productFromDatabase.getName()).isEqualTo(TEST_PRODUCT_NAME);
+        Assertions.assertThat(productFromDatabase.getDescription()).isEqualTo(TEST_DESCRIPTION);
     }
 
     @Test
     public void deleteProductTest() {
         Product product = new Product();
-        product.setName("Auto");
+        product.setName(TEST_PRODUCT_NAME);
         productRepository.save(product);
 
         List<Product> all = productRepository.findAll();
@@ -54,10 +62,10 @@ class ProductRepositoryTest {
     @Test
     public void findProductByNameContainsTest() {
         Product product = new Product();
-        product.setName("Auto");
+        product.setName(TEST_PRODUCT_NAME);
         productRepository.save(product);
 
-        Product findProduct = productRepository.findProductByNameContains("Auto");
+        Product findProduct = productRepository.findProductByNameContains(TEST_PRODUCT_NAME);
         Assert.assertNotNull(findProduct);
     }
 
@@ -75,7 +83,7 @@ class ProductRepositoryTest {
         productRepository.save(productsTwo);
         productRepository.save(productsThree);
 
-        List<Product> findProduct = productRepository.findProductByIdBetween(0L,1L);
-        Assertions.assertThat(findProduct.size()).isEqualTo(2);
+        List<Product> findProduct = productRepository.findProductByIdBetween(productsOne.getId(), productsThree.getId());
+        Assertions.assertThat(findProduct.size()).isEqualTo(3);
     }
 }

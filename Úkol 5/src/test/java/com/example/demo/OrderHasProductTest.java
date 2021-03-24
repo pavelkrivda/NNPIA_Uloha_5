@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.entity.Order;
-import com.example.demo.entity.OrderHasProduct;
-import com.example.demo.entity.Product;
-import com.example.demo.entity.State;
+import com.example.demo.entity.*;
 import com.example.demo.repository.*;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,11 @@ import static org.hamcrest.Matchers.hasSize;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class OrderHasProductTest {
 
+    private static final State TEST_ORDER_STATE = State.NEW;
+    private static final String TEST_PRODUCT_NAME = "Auto";
+    private static final String TEST_DESCRIPTION_NAME = "Popis";
+    private static final int TEST_AMOUNT = 10;
+
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -34,19 +37,27 @@ public class OrderHasProductTest {
         OrderHasProduct hasProduct = new OrderHasProduct();
 
         Order order = new Order();
-        order.setState(State.NEW);
+        order.setState(TEST_ORDER_STATE);
         orderRepository.save(order);
         Product product = new Product();
-        product.setName("Auto");
+        product.setName(TEST_PRODUCT_NAME);
+        product.setDescription(TEST_DESCRIPTION_NAME);
+        product.setName(TEST_PRODUCT_NAME);
         productRepository.save(product);
 
         hasProduct.setOrder(order);
         hasProduct.setProduct(product);
-        hasProduct.setAmount(10);
+        hasProduct.setAmount(TEST_AMOUNT);
         orderHasProductRepository.save(hasProduct);
 
         List<OrderHasProduct> all = orderHasProductRepository.findAll();
         assertThat(all, hasSize(1));
+
+        OrderHasProduct orderHasProductFromDatabase = orderHasProductRepository.findById(hasProduct.getId()).get();
+        Assertions.assertThat(orderHasProductFromDatabase.getAmount()).isEqualTo(TEST_AMOUNT);
+        Assertions.assertThat(orderHasProductFromDatabase.getProduct().getName()).isEqualTo(TEST_PRODUCT_NAME);
+        Assertions.assertThat(orderHasProductFromDatabase.getProduct().getDescription()).isEqualTo(TEST_DESCRIPTION_NAME);
+        Assertions.assertThat(orderHasProductFromDatabase.getOrder().getState()).isEqualTo(TEST_ORDER_STATE);
     }
 
     @Test
