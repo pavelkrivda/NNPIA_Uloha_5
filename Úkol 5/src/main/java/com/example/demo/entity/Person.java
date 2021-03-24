@@ -14,7 +14,7 @@ public class Person {
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Address address;
 
     @Column(length = 50)

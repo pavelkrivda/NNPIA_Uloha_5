@@ -1,14 +1,16 @@
 package com.example.demo;
 
-import com.example.demo.entity.Address;
+import com.example.demo.datafactory.AddressTestDataFactory;
+import com.example.demo.datafactory.PersonTestDataFactory;
 import com.example.demo.entity.Person;
-import com.example.demo.repository.*;
+import com.example.demo.repository.PersonRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -19,44 +21,40 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import({PersonTestDataFactory.class, AddressTestDataFactory.class})
 public class PersonRepositoryTest {
 
-    public static final String TEST_FIRST_MAME = "Pepa";
-    public static final String TEST_LAST_NAME = "Novak";
-    public static final int TEST_AGE = 5;
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private PersonTestDataFactory personTestDataFactory;
+
     @Test
     public void savePersonTest() {
-        Person person = new Person();
-        person.setFirstName(TEST_FIRST_MAME);
-        person.setLastName(TEST_LAST_NAME);
-        person.setAge(TEST_AGE);
-
-        personRepository.save(person);
+        personTestDataFactory.savePerson();
 
         List<Person> all = personRepository.findAll();
         assertThat(all, hasSize(1));
 
-        Person personFromDatabase = personRepository.findById(person.getId()).get();
-        Assertions.assertThat(personFromDatabase.getFirstName()).isEqualTo(TEST_FIRST_MAME);
-        Assertions.assertThat(personFromDatabase.getLastName()).isEqualTo(TEST_LAST_NAME);
-        Assertions.assertThat(personFromDatabase.getAge()).isEqualTo(TEST_AGE);
+        Person readFromDatabase = personRepository.findById(all.get(0).getId()).get();
+        Assertions.assertThat(readFromDatabase.getFirstName()).isEqualTo(PersonTestDataFactory.TEST_FIRST_NAME);
+        Assertions.assertThat(readFromDatabase.getLastName()).isEqualTo(PersonTestDataFactory.TEST_LAST_NAME);
+        Assertions.assertThat(readFromDatabase.getAge()).isEqualTo(PersonTestDataFactory.TEST_AGE);
+
+        Assertions.assertThat(readFromDatabase.getAddress().getCity()).isEqualTo(AddressTestDataFactory.TEST_CITY);
+        Assertions.assertThat(readFromDatabase.getAddress().getState()).isEqualTo(AddressTestDataFactory.TEST_STATE);
+        Assertions.assertThat(readFromDatabase.getAddress().getPostalCode()).isEqualTo(AddressTestDataFactory.TEST_POSTAL_CODE);
     }
 
     @Test
     public void deletePersonTest() {
-        Person person = new Person();
-        person.setFirstName(TEST_FIRST_MAME);
-        person.setLastName(TEST_LAST_NAME);
-        person.setAge(TEST_AGE);
-        personRepository.save(person);
+        personTestDataFactory.savePerson();
 
         List<Person> all = personRepository.findAll();
         assertThat(all, hasSize(1));
 
-        personRepository.delete(person);
+        personRepository.delete(all.get(0));
 
         all = personRepository.findAll();
         assertThat(all, hasSize(0));

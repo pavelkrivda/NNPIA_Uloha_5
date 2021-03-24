@@ -19,10 +19,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final OrderHasProductRepository orderHasProductRepository;
-    private Map<Product, Integer> cart;
+    private final Map<Product, Integer> cart;
 
     public ShoppingCartServiceImpl(ProductRepository productRepository, OrderRepository orderRepository,
                                    OrderHasProductRepository orderHasProductRepository) {
+
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.orderHasProductRepository = orderHasProductRepository;

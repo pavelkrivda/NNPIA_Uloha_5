@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.datafactory.AddressTestDataFactory;
+import com.example.demo.datafactory.OrderTestDataFactory;
+import com.example.demo.datafactory.PersonTestDataFactory;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.State;
 import com.example.demo.repository.*;
@@ -10,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -21,36 +25,43 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import({OrderTestDataFactory.class, PersonTestDataFactory.class, AddressTestDataFactory.class})
 public class OrderRepositoryTest {
-
-    private static final State TEST_STATE = State.NEW;
 
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private OrderTestDataFactory orderTestDataFactory;
+
     @Test
     public void saveOrderTest() {
-        Order order = new Order();
-        order.setState(TEST_STATE);
-        orderRepository.save(order);
+        orderTestDataFactory.saveOrder();
 
         List<Order> all = orderRepository.findAll();
         assertThat(all, hasSize(1));
 
-        Order orderFromDatabase = orderRepository.findById(order.getId()).get();
-        Assertions.assertThat(orderFromDatabase.getState()).isEqualTo(TEST_STATE);
+        Order readFromDatabase = orderRepository.findById(all.get(0).getId()).get();
+
+        Assertions.assertThat(readFromDatabase.getState()).isEqualTo(OrderTestDataFactory.TEST_STATE);
+
+        Assertions.assertThat(readFromDatabase.getPerson().getFirstName()).isEqualTo(PersonTestDataFactory.TEST_FIRST_NAME);
+        Assertions.assertThat(readFromDatabase.getPerson().getLastName()).isEqualTo(PersonTestDataFactory.TEST_LAST_NAME);
+        Assertions.assertThat(readFromDatabase.getPerson().getAge()).isEqualTo(PersonTestDataFactory.TEST_AGE);
+
+        Assertions.assertThat(readFromDatabase.getPerson().getAddress().getCity()).isEqualTo(AddressTestDataFactory.TEST_CITY);
+        Assertions.assertThat(readFromDatabase.getPerson().getAddress().getState()).isEqualTo(AddressTestDataFactory.TEST_STATE);
+        Assertions.assertThat(readFromDatabase.getPerson().getAddress().getPostalCode()).isEqualTo(AddressTestDataFactory.TEST_POSTAL_CODE);
     }
 
     @Test
     public void deleteOrderTest() {
-        Order order = new Order();
-        order.setState(TEST_STATE);
-        orderRepository.save(order);
+        orderTestDataFactory.saveOrder();
 
         List<Order> all = orderRepository.findAll();
         assertThat(all, hasSize(1));
 
-        orderRepository.delete(order);
+        orderRepository.delete(all.get(0));
 
         all = orderRepository.findAll();
         assertThat(all, hasSize(0));
@@ -58,9 +69,7 @@ public class OrderRepositoryTest {
 
     @Test
     public void findByIdTest() {
-        Order order = new Order();
-        order.setState(TEST_STATE);
-        orderRepository.save(order);
+        orderTestDataFactory.saveOrder();
 
         Optional<Order> findOrder = orderRepository.findById(0L);
         Assert.assertNotNull(findOrder);

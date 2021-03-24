@@ -11,7 +11,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Person person;
 
     @Enumerated(EnumType.STRING)
@@ -43,6 +43,14 @@ public class Order {
 
     public void setOrderHasProducts(Set<OrderHasProduct> orderHasProducts) {
         this.orderHasProducts = orderHasProducts;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override

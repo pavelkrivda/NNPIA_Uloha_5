@@ -15,13 +15,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({ProductTestDataFactory.class, SupplierTestDataFactory.class, ShoppingCartServiceImpl.class})
-public class ShoppingCartTest {
+@Import([ProductTestDataFactory.class, SupplierTestDataFactory.class, ShoppingCartServiceImpl.class])
+public class ShoppingCartGroovyTest {
 
     @Autowired
     private ProductRepository productRepository;
