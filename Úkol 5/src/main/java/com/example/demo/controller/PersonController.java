@@ -4,10 +4,12 @@ import com.example.demo.dto.AddOrEditPersonDto;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Person;
 import com.example.demo.repository.AddressRepository;
+import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,13 @@ public class PersonController {
     private PersonRepository personRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @ExceptionHandler(RuntimeException.class)
+    public String handleException() {
+        return "error";
+    }
 
     @GetMapping("/person")
     public String showAllPerson(Model model) {
@@ -83,7 +92,12 @@ public class PersonController {
 
         if (id != null) {
             Person person = personRepository.findById(id).get();
-            personRepository.delete(person);
+
+            if (orderRepository.existsOrderByPerson_Id(person.getId())) {
+                // TODO vypsat chybovou zprávyu
+            } else {
+                personRepository.delete(person);
+            }
         }
 
         return "redirect:/person";

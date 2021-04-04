@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Product detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <h5>Název:</h5>
+    <h3 th:text="${supplier.name}"></h3>
+
+</section>
+
+</body>
+
+</html>

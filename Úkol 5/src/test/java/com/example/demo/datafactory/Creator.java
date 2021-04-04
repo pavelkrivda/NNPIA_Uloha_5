@@ -60,7 +60,7 @@ public class Creator {
                     field.setAccessible(true);
                     Object propValue = FieldUtils.readField(field, entity);
                     boolean id = fieldHasAnnotation(field, Id.class);
-                    ;
+
                     if (propValue == null && !id) {
                         Class<?> fieldClass = field.getType();
                         if (fieldClass.isAssignableFrom(String.class)) {

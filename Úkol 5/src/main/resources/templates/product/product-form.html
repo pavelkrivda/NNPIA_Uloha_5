@@ -20,13 +20,18 @@
 
         <div class="form-group">
             <label for="description">Description: </label><br>
-            <textarea type="text" cols="135" rows="10" th:field="*{description}" id="description" required></textarea>
+            <textarea type="text" cols="110" rows="10" th:field="*{description}" id="description" required></textarea>
         </div>
 
         <div class="form-group">
             <label for="image">Select image: </label>
             <input type="file" th:field="*{image}" class="form-control" id="image" placeholder="Select image" required>
-        </div><br>
+        </div>
+
+        <div class="form-group">
+            <label for="supplier">Supplaier name: </label><br>
+            <input type="text" th:field="*{supplier.name}" class="form-control" placeholder="Supplier name" id="supplier" required>
+        </div>  <br>
 
         <button type="submit" class="btn btn-primary">Insert product</button>
     </form>

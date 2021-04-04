@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+
+<h2>Product list</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+
+<section class="product-list">
+
+    <table class="table table-striped" style="width: 800px">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${supplierList.empty}">
+            <td colspan="2">Persons is empty</td>
+        </tr>
+        <tr th:each="supplier, iter : ${supplierList}">
+            <td><span th:text="${iter.index + 1}"></span></td>
+            <td><span th:text="${supplier.name}"></span></td>
+            <td><a th:href="'/supplier-detail/' + ${supplier.id}">Detail</a></td>
+            <td><a th:href="'/supplier-form/' + ${supplier.id}">Edit</a></td>
+            <td><a th:href="'/supplier-remove/' + ${supplier.id}">Remove</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+
+</html>

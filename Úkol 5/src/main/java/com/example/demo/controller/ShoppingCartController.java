@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -13,6 +14,11 @@ public class ShoppingCartController {
 
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public String handleException() {
+        return "error";
     }
 
     @GetMapping("/shopping-cart-add/{id}")

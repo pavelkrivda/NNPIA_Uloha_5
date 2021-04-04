@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="cz" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::htmlHead"></head>
+
+<body>
+<h2>Add product</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+
+    <form action="#" th:action="@{/supplier-form-process}" th:object="${supplier}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="hidden" th:field="*{id}">
+        </div>
+
+        <div class="form-group">
+            <label for="supplier">Supplaier name: </label><br>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Supplier name" id="supplier" required>
+        </div>  <br>
+
+        <button type="submit" class="btn btn-primary">Insert supplier</button>
+    </form>
+</section>
+</body>
+
+</html>
