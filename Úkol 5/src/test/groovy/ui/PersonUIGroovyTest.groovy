@@ -1,7 +1,8 @@
-package com.example.demo.ui;
+package com.example.demo.ui
 
 import com.example.demo.datafactory.Creator
 import com.example.demo.entity.Person
+import com.example.demo.repository.AddressRepository
 import com.example.demo.repository.PersonRepository
 import org.junit.Assert
 import org.junit.jupiter.api.AfterEach
@@ -21,15 +22,16 @@ public class PersonUIGroovyTest {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Autowired
     private Creator creator;
 
     private WebDriver driver;
 
-
     @BeforeAll
-    public static void setupWebdriverChromeDriver()  {
+    public static void setupWebdriverChromeDriver() {
         URL url = TestImplementation.class.getResource("/chromedriver");
         String chromeDriverPaht = null;
         try {
@@ -46,6 +48,7 @@ public class PersonUIGroovyTest {
         driver = new ChromeDriver();
 
         personRepository.deleteAll();
+        addressRepository.deleteAll();
     }
 
     @AfterEach
@@ -53,6 +56,9 @@ public class PersonUIGroovyTest {
         if (driver != null) {
             driver.quit();
         }
+
+        personRepository.deleteAll();
+        addressRepository.deleteAll();
     }
 
     @Test

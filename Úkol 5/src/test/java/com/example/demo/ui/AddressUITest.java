@@ -24,7 +24,6 @@ public class AddressUITest {
 
     private WebDriver driver;
 
-
     @BeforeAll
     public static void setupWebdriverChromeDriver()  {
         URL url = TestImplementation.class.getResource("/chromedriver");
@@ -50,6 +49,8 @@ public class AddressUITest {
         if (driver != null) {
             driver.quit();
         }
+
+        addressRepository.deleteAll();
     }
 
     @Test

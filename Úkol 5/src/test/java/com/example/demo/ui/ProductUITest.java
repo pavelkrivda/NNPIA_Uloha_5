@@ -1,6 +1,7 @@
 package com.example.demo.ui;
 
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.SupplierRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,9 +22,10 @@ public class ProductUITest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SupplierRepository supplierRepository;
 
     private WebDriver driver;
-
 
     @BeforeAll
     public static void setupWebdriverChromeDriver()  {
@@ -43,6 +45,7 @@ public class ProductUITest {
         driver = new ChromeDriver();
 
         productRepository.deleteAll();
+        supplierRepository.deleteAll();
     }
 
     @AfterEach
@@ -50,6 +53,9 @@ public class ProductUITest {
         if (driver != null) {
             driver.quit();
         }
+
+        productRepository.deleteAll();
+        supplierRepository.deleteAll();
     }
 
     @Test

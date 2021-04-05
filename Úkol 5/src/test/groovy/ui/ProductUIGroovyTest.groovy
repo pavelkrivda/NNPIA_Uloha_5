@@ -2,7 +2,8 @@ package com.example.demo.ui;
 
 import com.example.demo.datafactory.Creator
 import com.example.demo.entity.Product;
-import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.ProductRepository
+import com.example.demo.repository.SupplierRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,12 +22,13 @@ public class ProductUIGroovyTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SupplierRepository supplierRepository;
 
     @Autowired
     private Creator creator;
 
     private WebDriver driver;
-
 
     @BeforeAll
     public static void setupWebdriverChromeDriver()  {
@@ -46,6 +48,7 @@ public class ProductUIGroovyTest {
         driver = new ChromeDriver();
 
         productRepository.deleteAll();
+        supplierRepository.deleteAll();
     }
 
     @AfterEach
@@ -53,6 +56,9 @@ public class ProductUIGroovyTest {
         if (driver != null) {
             driver.quit();
         }
+
+        productRepository.deleteAll();
+        supplierRepository.deleteAll();
     }
 
     @Test

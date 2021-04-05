@@ -1,5 +1,6 @@
 package com.example.demo.ui;
 
+import com.example.demo.repository.AddressRepository;
 import com.example.demo.repository.PersonRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -21,9 +22,10 @@ public class PersonUITest {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     private WebDriver driver;
-
 
     @BeforeAll
     public static void setupWebdriverChromeDriver()  {
@@ -43,6 +45,7 @@ public class PersonUITest {
         driver = new ChromeDriver();
 
         personRepository.deleteAll();
+        addressRepository.deleteAll();
     }
 
     @AfterEach
@@ -50,6 +53,9 @@ public class PersonUITest {
         if (driver != null) {
             driver.quit();
         }
+
+        personRepository.deleteAll();
+        addressRepository.deleteAll();
     }
 
     @Test

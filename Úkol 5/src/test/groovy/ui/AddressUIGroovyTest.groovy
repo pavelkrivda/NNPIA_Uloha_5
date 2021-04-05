@@ -27,7 +27,6 @@ public class AddressUIGroovyTest {
 
     private WebDriver driver;
 
-
     @BeforeAll
     public static void setupWebdriverChromeDriver()  {
         URL url = TestImplementation.class.getResource("/chromedriver");
@@ -53,6 +52,8 @@ public class AddressUIGroovyTest {
         if (driver != null) {
             driver.quit();
         }
+
+        addressRepository.deleteAll();
     }
 
     @Test
