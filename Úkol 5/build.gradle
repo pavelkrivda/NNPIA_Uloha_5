@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
@@ -27,9 +27,7 @@ dependencies {
     testImplementation 'commons-beanutils:commons-beanutils:1.9.4'
     testImplementation 'org.apache.commons:commons-lang3:3.11'
 
-
-
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 }
 
 test{
